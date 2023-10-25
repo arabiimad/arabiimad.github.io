@@ -12,13 +12,11 @@ const AnimatedLogo = () => {
       intervalId = setInterval(() => {
         if (phraseIndex === phrases.length - 1) {
           clearInterval(intervalId);
-          // Let "I'm a developer" stay for 5 seconds
           setTimeout(() => {
-            setText('Imadev'); // Reset to "Imadev"
-            // Pause for another 10 seconds on "Imadev"
+            setText('Imadev');
             setTimeout(() => {
-              phraseIndex = 0; // Reset phraseIndex to start from the beginning
-              startAnimation();  // Restart the animation
+              phraseIndex = 0;
+              startAnimation();
             }, 10000);
           }, 5000);
         } else {
@@ -30,7 +28,6 @@ const AnimatedLogo = () => {
 
     startAnimation();
 
-    // Cleanup function to clear any intervals or timeouts
     return () => {
       clearInterval(intervalId);
     };
@@ -38,61 +35,70 @@ const AnimatedLogo = () => {
 
   return (
     <div className="text-4xl font-bold">
-      {text.split(' ').map((word, index) => {
+      {text.split(' ').map((word, index, arr) => {
+        let renderedElement;
+
         if (word === "Imadev") {
-          return (
-            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-800 via-yellow-600 to-yellow-400">
+          renderedElement = (
+            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br from-orange-800 via-yellow-600 to-yellow-400">
               {word}
             </span>
           );
         } else if (word === "I'madev") {
-          return (
+          renderedElement = (
             <span key={index}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-800 via-yellow-600 to-yellow-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-800 via-yellow-600 to-yellow-400">
                 I
               </span>
               {'\''}
-              <span className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-800 via-yellow-600 to-yellow-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-800 via-yellow-600 to-yellow-400">
                 madev
               </span>
             </span>
           );
         } else if (word === "I'm") {
-          return (
+          renderedElement = (
             <span key={index}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-800 via-yellow-600 to-yellow-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-800 via-yellow-600 to-yellow-400">
                 I
               </span>
               {'\''}
-              <span className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-800 via-yellow-600 to-yellow-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-800 via-yellow-600 to-yellow-400">
                 m
               </span>
             </span>
           );
         } else if (word === "a") {
-          return (
-            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-500 via-yellow-500 to-yellow-200">
+          renderedElement = (
+            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-200">
               {word}
             </span>
           );
         } else if (word === "dev") {
-          return (
-            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-500 via-yellow-500 to-yellow-200">
+          renderedElement = (
+            <span key={index} className="text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-200">
               {word}
             </span>
           );
         } else if (word === "developer") {
-          return (
+          renderedElement = (
             <span key={index}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-br  from-orange-500 via-yellow-500 to-yellow-200">
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-500 via-yellow-500 to-yellow-200">
                 dev
               </span>
               eloper
             </span>
           );
         } else if (word === "!") {
-          return word;
+          renderedElement = word;
         }
+
+        return (
+          <React.Fragment key={index}>
+            {renderedElement}
+            {(index !== arr.length - 1) && <span>&nbsp;</span>}
+          </React.Fragment>
+        );
       })}
     </div>
   );
